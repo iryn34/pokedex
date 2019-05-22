@@ -1,0 +1,48 @@
+import React from 'react';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+import styles from './styles.module.scss';
+
+class PokemonSearch extends React.Component {
+  state = {
+    typeValue: '',
+  };
+
+  handleChange = event => {
+    this.setState({
+      typeValue: event.target.value
+    });
+  }
+
+  render() {
+    const { typeValue } = this.state;
+    const { onClick } = this.props;
+
+    return (
+      <div className={styles.form}>
+        <TextField
+          id="outlined-search"
+          type="search"
+          className={styles.textField}
+          margin="normal"
+          variant="outlined"
+          value={typeValue}
+          onChange={this.handleChange}
+        />
+
+        <Button
+          className={styles.button}
+          variant="contained" 
+          color="primary" 
+          onClick={() => onClick(typeValue)}            
+        >
+          Search pokemons by type
+        </Button>
+      </div>
+    );
+  }
+}
+
+export default PokemonSearch;
