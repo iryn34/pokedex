@@ -1,5 +1,9 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import PokemonList from '../PokemonList';
 import LoadMoreButton from '../LoadMoreButton';
@@ -14,6 +18,7 @@ class PokemonListSection extends React.Component {
     pokemons: [],
     offset: 0,
     isButtonDisabled: false,
+    openSnackbar: false,
   };
 
   filteredPokemons = undefined;
@@ -28,7 +33,7 @@ class PokemonListSection extends React.Component {
       ));
   }
 
-  handleClick = () => {
+  handleLoadMoreClick = () => {
     if (this.filteredPokemons) {
       this.setState(state => ({
         pokemons: [
@@ -60,8 +65,53 @@ class PokemonListSection extends React.Component {
         }, () => {
           this.props.onSearchClick(extractIDFromPokemonUrl(this.state.pokemons[0].url));
         });
+      })
+      .catch(error => {
+        this.setState({
+          openSnackbar: true,
+        });
       });
   }; 
+
+  toggleSnackbarClick = () => {
+    this.setState(state => ({
+      openSnackbar: !state.openSnackbar,
+    }));
+  };
+
+  renderSnackbar = () => {
+    return (
+      <div>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.openSnackbar}
+          autoHideDuration={6000}
+          onClose={this.toggleSnackbarClick}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={
+            <span id="message-id">
+              Oops! There are no pokemons with such type.
+            </span>
+          }
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="primary"
+              onClick={this.toggleSnackbarClick}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+      </div>
+    );
+  };
 
   render() {
     const { pokemons, offset, isButtonDisabled } = this.state;
@@ -85,12 +135,13 @@ class PokemonListSection extends React.Component {
             <LoadMoreButton
               offset={offset}
               disabled={isButtonDisabled}
-              onClick={this.handleClick}
+              onClick={this.handleLoadMoreClick}
             />
           </Grid>
 
           <Grid xs={2} sm={1} item />
         </Grid>
+        {this.renderSnackbar()}
       </>
     );
   }
