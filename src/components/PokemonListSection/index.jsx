@@ -1,8 +1,5 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 
 import PokemonList from '../PokemonList';
@@ -71,6 +68,18 @@ class PokemonListSection extends React.Component {
           openSnackbar: true,
         });
       });
+  };
+
+  handleDefaultClick = type => {
+    PokemonAPIClient.getPokemonList(DEFAULT_LIMIT, 0)
+      .then(response => (
+        this.setState({
+          pokemons: response.data.results,
+          offset: DEFAULT_LIMIT,
+        }, () => {
+          this.props.onSearchClick(extractIDFromPokemonUrl(this.state.pokemons[0].url));
+        })
+      ));
   }; 
 
   toggleSnackbarClick = () => {
@@ -81,35 +90,23 @@ class PokemonListSection extends React.Component {
 
   renderSnackbar = () => {
     return (
-      <div>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={this.state.openSnackbar}
-          autoHideDuration={6000}
-          onClose={this.toggleSnackbarClick}
-          ContentProps={{
-            'aria-describedby': 'message-id',
-          }}
-          message={
-            <span id="message-id">
-              Oops! There are no pokemons with such type.
-            </span>
-          }
-          action={[
-            <IconButton
-              key="close"
-              aria-label="Close"
-              color="primary"
-              onClick={this.toggleSnackbarClick}
-            >
-              <CloseIcon />
-            </IconButton>,
-          ]}
-        />
-      </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        open={this.state.openSnackbar}
+        autoHideDuration={6000}
+        onClose={this.toggleSnackbarClick}
+        ContentProps={{
+          'aria-describedby': 'message-id',
+        }}
+        message={
+          <span id="message-id">
+            Oops! There are no pokemons with such type.
+          </span>
+        }
+      />
     );
   };
 
@@ -125,6 +122,7 @@ class PokemonListSection extends React.Component {
           <Grid xs={8} sm={10} item>
             <PokemonSearch 
               onClick={this.handleSearchClick}
+              onDefaultClick={this.handleDefaultClick}
             />
 
             <PokemonList 

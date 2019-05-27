@@ -18,7 +18,7 @@ class PokemonSearch extends React.Component {
 
   render() {
     const { typeValue } = this.state;
-    const { onClick } = this.props;
+    const { onClick, onDefaultClick } = this.props;
 
     return (
       <div className={styles.form}>
@@ -39,6 +39,18 @@ class PokemonSearch extends React.Component {
           onClick={() => onClick(typeValue)}            
         >
           Search pokemons by type
+        </Button>
+
+        <Button
+          className={styles.button}
+          variant="outlined" 
+          color="primary" 
+          onClick={() => {
+            this.setState({typeValue: ''});
+            onDefaultClick();
+          }}            
+        >
+          Default pokemons
         </Button>
       </div>
     );
