@@ -52,7 +52,13 @@ class PokemonItem extends React.Component {
           </h3>
           
           {types.map((typeObj, index) => (
-            <Chip key={index} className={styles.chip} label={typeObj.type.name} />
+            <Chip 
+              key={index} 
+              className={styles.chip} 
+              label={upperCaseFirstLetter(typeObj.type.name)} 
+              color='primary'
+              variant='outlined'
+            />
           ))}
         </Card>
     );

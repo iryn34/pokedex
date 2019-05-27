@@ -43,8 +43,8 @@ class PokemonSearch extends React.Component {
 
         <Button
           className={styles.button}
-          variant="outlined" 
-          color="primary" 
+          variant="outlined"
+          color="primary"
           onClick={() => {
             this.setState({typeValue: ''});
             onDefaultClick();
