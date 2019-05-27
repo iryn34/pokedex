@@ -9,6 +9,8 @@ import { upperCaseFirstLetter } from '../../lib/utils';
 
 import styles from './styles.module.scss';
 
+import pokeball from '../../images/pokeball.png'
+
 class PokemonItem extends React.Component {
   state = {
     avatar: '',
@@ -33,6 +35,8 @@ class PokemonItem extends React.Component {
     const { avatar, name, types, isLoading } = this.state;
     const { id, onItemClick } = this.props;
 
+    // console.log(avatar);
+
     if (isLoading) {
       return <Spinner />;
     }
@@ -44,7 +48,7 @@ class PokemonItem extends React.Component {
         >
           <Avatar
             className={styles.avatar}
-            src={avatar} 
+            src={avatar ? avatar : pokeball} 
           />
 
           <h3 className={styles.name}>
