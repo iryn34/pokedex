@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 
 import PokemonItem from '../PokemonItem';
@@ -22,5 +23,10 @@ class PokemonList extends React.Component {
     );
   }
 }
+
+PokemonList.propTypes = {
+  pokemons: PropTypes.array,
+  onItemClick: PropTypes.func,
+};
 
 export default PokemonList;

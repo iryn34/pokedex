@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -28,5 +29,10 @@ class LoadMoreButton extends React.Component {
     );
   }
 }
+
+LoadMoreButton.propTypes = {
+  disabled: PropTypes.bool,
+  onClick: PropTypes.func,
+};
 
 export default LoadMoreButton;

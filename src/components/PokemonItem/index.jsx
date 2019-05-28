@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
@@ -35,8 +36,6 @@ class PokemonItem extends React.Component {
     const { avatar, name, types, isLoading } = this.state;
     const { id, onItemClick } = this.props;
 
-    // console.log(avatar);
-
     if (isLoading) {
       return <Spinner />;
     }
@@ -68,5 +67,10 @@ class PokemonItem extends React.Component {
     );
   }
 }
+
+PokemonItem.propTypes = {
+  id: PropTypes.string,
+  onItemClick: PropTypes.func,
+};
 
 export default PokemonItem;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Snackbar from '@material-ui/core/Snackbar';
 
@@ -144,5 +145,10 @@ class PokemonListSection extends React.Component {
     );
   }
 }
+
+PokemonListSection.propTypes = {
+  onSearchClick: PropTypes.func,
+  onItemClick: PropTypes.func,
+};
 
 export default PokemonListSection;

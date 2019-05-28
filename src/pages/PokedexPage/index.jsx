@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import withSizes from 'react-sizes';
@@ -6,7 +7,6 @@ import withSizes from 'react-sizes';
 import Title from '../../components/Title';
 import PokemonListSection from '../../components/PokemonListSection';
 import PokemonDetailsCard from '../../components/PokemonDetailsCard';
-// import styles from './styles.module.scss';
 
 class PokedexPage extends React.Component {
   state = {
@@ -32,15 +32,16 @@ class PokedexPage extends React.Component {
   };
 
   render() {
-    const { id } = this.state;
+    const { id, open } = this.state;
+    const { isMobile } = this.props;
     
     return (
       <>
         <Title />
 
-        {this.props.isMobile && (
+        {isMobile && (
           <SwipeableDrawer
-            open={this.state.open}
+            open={open}
             onClick={this.closeDrawer}
             onOpen={() => {}}
             onClose={() => {}}
@@ -59,7 +60,7 @@ class PokedexPage extends React.Component {
             />
           </Grid>
 
-          {!this.props.isMobile && (
+          {!isMobile && (
             <Grid sm={4} item>
               <PokemonDetailsCard id={id} />
             </Grid>
@@ -69,6 +70,10 @@ class PokedexPage extends React.Component {
     );
   }
 }
+
+PokedexPage.propTypes = {
+  isMobile: PropTypes.bool,
+};
 
 const mapSizesToProps = ({ width }) => ({
   isMobile: width < 600,

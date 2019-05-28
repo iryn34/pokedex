@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -56,5 +57,10 @@ class PokemonSearch extends React.Component {
     );
   }
 }
+
+PokemonSearch.propTypes = {
+  onClick: PropTypes.func, 
+  onDefaultClick: PropTypes.func,
+};
 
 export default PokemonSearch;
